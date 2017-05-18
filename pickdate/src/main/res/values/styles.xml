@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="pickdate_cell">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:text">23</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/pickdatecell</item>
+        <item name="android:onClick">clickDateCell</item>
+    </style>
+    <style name="pickdate_daterow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45px</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+</resources>
