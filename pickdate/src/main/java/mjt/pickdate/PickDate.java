@@ -33,6 +33,8 @@ public class PickDate {
                     "iextra_innerbackgroundcolour",
             INTENTEXTRA_INMONTHCELLTEXTCOLOURSET =
                     "iextra_inmonthcelltextcolourset",
+            INTENTEXTRA_GRIDHDRTEXTXOLOURSET = "iextra_gridhdrcolourset",
+            INTENTEXTRA_GRIDHDRTEXTCOLOUR = "iextra_gridhdrcolour",
             INTENTEXTRA_INMONTHCELLTEXTCOLOUR =
                     "iextra_inmonthcelltextcolour",
             INTENTEXTRA_DIMMEDCELLTEXTCOLOURSET =
@@ -47,6 +49,10 @@ public class PickDate {
                     "iextra_selecteddateovalcolourset",
             INTENTEXTRA_SELECTEDCELLOVALCOLOUR =
                     "iextra_selectedovalcolour",
+            INTENTEXTRA_SELECTEDCELLBACKGROUNDCOLOURSET =
+                    "iextra_selectedcellbackgroundcolourset",
+            INTENTEXTRA_SELECTEDCELLBACKGROUNDCOLOUR =
+                    "iextra_selectedcellbackgroundcolour",
             INTENTEXTRA_CELLBORDERCOLOURSET = "iextra_cellbordercolourset",
             INTENTEXTRA_CELLBORDERCOLOUR = "iextra_cellbordercolour",
             INTENTEXTRA_CELLBORDERWIDTHSET = "iextra_cellborderwidthset",
@@ -74,6 +80,8 @@ public class PickDate {
     private boolean mOuterBackgroundColourSet = false;
     private int mInnerBackgroundColour;
     private boolean mInnerBackgroundColourSet = false;
+    private int mGridHdrTextColour;
+    private boolean mGridHdrTextColourSet = false;
     private int mInMonthCellTextColour;
     private boolean mInMonthCellTextColourSet = false;
     private int mNotInMonthCellTextColour;
@@ -82,6 +90,8 @@ public class PickDate {
     private boolean mSelectedCellTextColourSet = false;
     private int mSelectedCellHightLightColour;
     private boolean mSelectedCellHighlightColourSet = false;
+    private boolean mSelectedCellBackgrndColourSet = false;
+    private int mSelectedCellBackgrndColour;
     private int mCellBorderColour;
     private boolean mCellBorderColourSet = false;
     private int mCellBorderWidth;
@@ -212,6 +222,14 @@ public class PickDate {
                     mInnerBackgroundColour);
         }
 
+        // Add IntentExtra for dategrid headings text colour
+        intent.putExtra(INTENTEXTRA_GRIDHDRTEXTXOLOURSET,
+                mGridHdrTextColourSet);
+        if (mGridHdrTextColourSet) {
+            intent.putExtra(INTENTEXTRA_GRIDHDRTEXTCOLOUR,
+                    mGridHdrTextColour);
+        }
+
         // Add IntentExtra for notinmoth cell text colour
         intent.putExtra(INTENTEXTRA_DIMMEDCELLTEXTCOLOURSET,
                 mNotInMonthCellTextColourSet);
@@ -242,6 +260,14 @@ public class PickDate {
         if (mSelectedCellHighlightColourSet) {
             intent.putExtra(INTENTEXTRA_SELECTEDCELLOVALCOLOUR,
                     mSelectedCellHightLightColour);
+        }
+
+        // Add IntentExtra for selected cell background colour
+        intent.putExtra(INTENTEXTRA_SELECTEDCELLBACKGROUNDCOLOURSET,
+                mSelectedCellBackgrndColourSet);
+        if (mSelectedCellBackgrndColourSet) {
+            intent.putExtra(INTENTEXTRA_SELECTEDCELLBACKGROUNDCOLOUR,
+                    mSelectedCellBackgrndColour);
         }
 
         // Add IntentExtra for cell borders
@@ -321,6 +347,11 @@ public class PickDate {
         mInnerBackgroundColourSet = true;
     }
 
+    public void setDateGridHeadingsTextColour(int dategridheadingstextcolour) {
+        mGridHdrTextColour = dategridheadingstextcolour;
+        mGridHdrTextColourSet = true;
+    }
+
     /**************************************************************************
      * Set the colour of the text for cells that are in the current month
      * @param inmonthcelltextcolour colour of the text
@@ -356,6 +387,11 @@ public class PickDate {
     public void setSelectedcellHightColour(int selectedcellhightlightcolour) {
         mSelectedCellHightLightColour = selectedcellhightlightcolour;
         mSelectedCellHighlightColourSet = true;
+    }
+
+    public void setSelectedCellBackgroundColour(int selectedcellbackgrndcolour) {
+        mSelectedCellBackgrndColour = selectedcellbackgrndcolour;
+        mSelectedCellBackgrndColourSet = true;
     }
 
     /**************************************************************************

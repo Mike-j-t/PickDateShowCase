@@ -11,7 +11,19 @@
     </style>
     <style name="pickdate_daterow">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">45px</item>
+        <item name="android:layout_height">1dp</item>
         <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="pickdate_dategridcolumnheader">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textStyle">bold|italic</item>
+    </style>
+    <style name="pickdate_adjustbutton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
     </style>
 </resources>

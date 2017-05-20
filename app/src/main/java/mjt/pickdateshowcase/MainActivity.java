@@ -80,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialise/Contruct a Date Picker Object
         mypickdate = new PickDate(this,
-                System.currentTimeMillis(),
-                65
+                System.currentTimeMillis()
         );
         //mypickdate = new PickDate(this);
 
@@ -91,20 +90,22 @@ public class MainActivity extends AppCompatActivity {
         //          string to be displayed as the title.
         //      (2) Empty, or null (eg not calling this) will result in the
         //          title defulting to Pick a Date.
-        //mypickdate.setTitle("My Title");     // Set the Date Picker's Title
+        //mypickdate.setTitle("My Custom Title");     // Set the Date Picker's Title
         //mypickdate.setTitleBackgroundColour(0xff0000aa); // Note sets entire background
         //mypickdate.setTitletextColour(0xffff0000); // Doesn't work
-        //mypickdate.setOuterBackgroundColour(0xffff0000);
-        //mypickdate.setInnerBackGroundColour(0xffffff00);
+        //mypickdate.setOuterBackgroundColour(0xff7777ff);
+        //mypickdate.setInnerBackGroundColour(0xff3333ff);
+        //mypickdate.setDateGridHeadingsTextColour(0xffff0000);
         //mypickdate.setNotInMonthCellTextColour(0xffaaaaaa);
         //mypickdate.setInMonthCellTextColour(0xff0000ff);
         //mypickdate.setSelectedCellTextColour(0xff00ff00);
-        //int selectedcellhighlightcolour = 0x550000ff;
+        int selectedcellhighlightcolour = 0xff00ff00;
         //mypickdate.setSelectedcellHightColour(selectedcellhighlightcolour);
         //mypickdate.setCellBorder(0xffff0000,1);
         //mypickdate.showSelectedCellHighlight(false);
-        //mypickdate.setDateDisplayTextColour(0xff00aa00);
+        //mypickdate.setDateDisplayTextColour(0x33000000);
         //mypickdate.alterHeightToWidthRatio(0.85f);
+        //mypickdate.setSelectedCellBackgroundColour(0xffff0000);
         mypickdate.show(this);              // Invoke the Date Picker
         resumestate = RESUMESTATE_DATEPICKED;
 

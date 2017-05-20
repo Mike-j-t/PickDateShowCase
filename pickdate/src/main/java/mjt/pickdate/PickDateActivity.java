@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+
 /**
  * Pickdate Activity - Display a Dialog for selecting a Date
  */
@@ -37,11 +38,8 @@ public class PickDateActivity extends Activity {
     String pd_title = "";
     private Calendar calendar = Calendar.getInstance();
 
-    private TextView[][] dategrid = new TextView[6][7];
-    Button okbutton;
-
     int pd_width;
-    float pd_widthpercentageofheight = 0.75f;   //TODO allow width/height percentage to be adjusted
+    float pd_widthpercentageofheight = 0.75f;
     int pd_height;
     int pd_scrpercent;
     int pd_basecellcolour;
@@ -51,10 +49,12 @@ public class PickDateActivity extends Activity {
     int pd_cellbordercolour;
     int pd_selectedcellbordercolour;    //TODO allow the selected cell border to be changed
     int pd_selectedcellborderwidth;     //TODO allow the selected cell border to be changed
+    int pd_selectedcellbackgrndcolour;
+    boolean pd_selectedcellbackgrndcolourflag = false;
     int pd_cellborderwidth;
     Drawable pd_normalcell;
     Drawable pd_selectedcell;
-    GradientDrawable pd_cellhighlight;
+    GradientDrawable pd_selectedcellhighlight;
     GradientDrawable pd_selectedcellborder;
     GradientDrawable pd_normalcellborder;
     private long pd_selecteddate;
@@ -71,6 +71,9 @@ public class PickDateActivity extends Activity {
     LinearLayout datecells_row4;
     LinearLayout datecells_row5;
     LinearLayout datecells_row6;
+    private TextView[][] dategrid = new TextView[6][7];
+    private TextView[] dategridhdrs = new TextView[7];
+    Button okbutton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +101,7 @@ public class PickDateActivity extends Activity {
         pd_selectedcell = ContextCompat.getDrawable(context,R.drawable.selecteddatecell);
         //LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(this,R.drawable.selecteddatecell);
         LayerDrawable selectedcellld = (LayerDrawable) pd_selectedcell;
-        pd_cellhighlight = (GradientDrawable) selectedcellld.findDrawableByLayerId(R.id.cellhighlight);
+        pd_selectedcellhighlight = (GradientDrawable) selectedcellld.findDrawableByLayerId(R.id.cellhighlight);
         pd_selectedcellborder = (GradientDrawable) selectedcellld.findDrawableByLayerId(R.id.cellborder);
 
         // Initialise the Dates grid and adjust the height and width
@@ -117,6 +120,7 @@ public class PickDateActivity extends Activity {
         setTitle();
         setOuterBackgroundColour();
         setInnerBackgroundColour();
+        setDateGridHeadingsTextColour();
         setDateDisplay();
         setCellCustomAttributes();
 
@@ -130,7 +134,7 @@ public class PickDateActivity extends Activity {
         // Uses the screen size to set textsizes
         final float displaydate_text_size = (float) pd_height / 20;
         //pd_displaydate.setTextSize(displaydate_text_size);
-        okbutton.setTextSize((displaydate_text_size * (float) 0.75));
+        okbutton.setTextSize((displaydate_text_size * (float) 0.55));
 
         // Determine the height to be used to make date cells square
         // Note only if width of cell is smaller than height
@@ -251,6 +255,22 @@ public class PickDateActivity extends Activity {
             }
         }
 
+        // get the TextView id's for the dateGrid Column Headings
+        dategridhdrs[0] = (TextView) this.findViewById(R.id.pickdate_c1hdr);
+        dategridhdrs[1] = (TextView) this.findViewById(R.id.pickdate_c2hdr);
+        dategridhdrs[2] = (TextView) this.findViewById(R.id.pickdate_c3hdr);
+        dategridhdrs[3] = (TextView) this.findViewById(R.id.pickdate_c4hdr);
+        dategridhdrs[4] = (TextView) this.findViewById(R.id.pickdate_c5hdr);
+        dategridhdrs[5] = (TextView) this.findViewById(R.id.pickdate_c6hdr);
+        dategridhdrs[6] = (TextView) this.findViewById(R.id.pickdate_c7hdr);
+
+        // Set the  Dategrid Heading TextSize according to the height of the
+        // TextView
+        for (TextView dghdrtv : dategridhdrs) {
+            dghdrtv.measure(0,0);
+            dghdrtv.setTextSize(dghdrtv.getMeasuredHeight() * 0.85f);
+        }
+
     }
 
     /*************************************************************************
@@ -316,6 +336,15 @@ public class PickDateActivity extends Activity {
                     if (tempcal.get(Calendar.DAY_OF_MONTH) == selected_dayinmonth) {
                         anADategrid.setTextColor(pd_highlightedcellcolour);
                         anADategrid.setBackground(pd_selectedcell);
+                        // If we want to use an alternative background colour
+                        if (pd_selectedcellbackgrndcolourflag) {
+                            //anADategrid.setBackgroundColor(pd_selectedcellbackgrndcolour);
+                            //Drawable d = DrawableCompat.wrap(anADategrid.getBackground());
+                            //DrawableCompat.setTint(d,pd_selectedcellbackgrndcolour);
+                            GradientDrawable gdhighlight = pd_selectedcellhighlight;
+                            GradientDrawable gdborder = pd_selectedcellborder;
+                            pd_selectedcellborder.setColor(pd_selectedcellbackgrndcolour);
+                        }
                         selectedcell = true;
                     }
                 }
@@ -443,11 +472,26 @@ public class PickDateActivity extends Activity {
         }
     }
 
+    /**
+     * Set the Text Colour of the date grid headings (mon, tue etc)
+     */
+    private void setDateGridHeadingsTextColour() {
+        if (this.getIntent().getBooleanExtra(
+                PickDate.INTENTEXTRA_GRIDHDRTEXTXOLOURSET,false)) {
+            int  colour = this.getIntent().getIntExtra(
+                    PickDate.INTENTEXTRA_GRIDHDRTEXTCOLOUR,0
+            );
+            for (TextView dghdrtv : dategridhdrs) {
+                dghdrtv.setTextColor(colour);
+            }
+        }
+    }
+
     /**************************************************************************
      * Set Cell Attributes if customised
      */
     private void setCellCustomAttributes() {
-        // Set the text colout to be used, if given for when a cell contains
+        // Set the text colour to be used, if given for when a cell contains
         // a date that is not in the current month. i.e DIMMED CELL
         if (this.getIntent().getBooleanExtra(
                 PickDate.INTENTEXTRA_DIMMEDCELLTEXTCOLOURSET,false)) {
@@ -480,15 +524,15 @@ public class PickDateActivity extends Activity {
             pd_highlightedcellhighlightcolour = this.getIntent().getIntExtra(
                     PickDate.INTENTEXTRA_SELECTEDCELLOVALCOLOUR,0
             );
-            pd_cellhighlight.setColor(pd_highlightedcellhighlightcolour);
+            pd_selectedcellhighlight.setColor(pd_highlightedcellhighlightcolour);
         } else {
-            pd_cellhighlight.setColor(pd_basecellcolour & 0x55ffffff);
+            pd_selectedcellhighlight.setColor(pd_basecellcolour & 0x55ffffff);
         }
         // Turn the SELECTED CELL HIGHLIGHT off, if given
         // Does this by setting full transparency to the highlight colour
         if (!this.getIntent().getBooleanExtra(
                 PickDate.INTENTEXTRA_SELECTEDCELLHIGHLIGHTSTATE,true)) {
-            pd_cellhighlight.setColor(pd_highlightedcellhighlightcolour & 0x00ffffff);
+            pd_selectedcellhighlight.setColor(pd_highlightedcellhighlightcolour & 0x00ffffff);
         }
         // Set the colour and width of the cell borders (better without borders)
         if (this.getIntent().getBooleanExtra(
@@ -506,6 +550,14 @@ public class PickDateActivity extends Activity {
             );
             pd_normalcellborder.setStroke(pd_cellborderwidth,pd_cellbordercolour);
             pd_selectedcellborder.setStroke(pd_cellborderwidth,pd_cellbordercolour);
+        }
+
+        if (this.getIntent().getBooleanExtra(
+                PickDate.INTENTEXTRA_SELECTEDCELLBACKGROUNDCOLOURSET,false)) {
+            pd_selectedcellbackgrndcolour = this.getIntent().getIntExtra(
+                    PickDate.INTENTEXTRA_SELECTEDCELLBACKGROUNDCOLOUR,0
+            );
+            pd_selectedcellbackgrndcolourflag = true;
         }
     }
 
