@@ -76,8 +76,7 @@ Here is an example where the Title Text and Title Background are set as in the p
         mypickdate.setTitleBackgroundColour(0xff0000aa); // BLUE
         mypickdate.setOuterBackgroundColour(0xff7777ff); // LIGHT BLUE
         mypickdate.setInnerBackGroundColour(0xff3333ff); // LIGHTISH BLUE
-
-![Outer and Inner Backgrounds Applied](http://i.imgur.com/tR0B5YO.jpg)
+![Outer and Inner BackGround colours changed](http://i.imgur.com/sqD6JG5.jpg)
 
 ## The Selected Date Display ##
 The currently selected date appears immediately below the title. The colour can be changed using the **`setDateDisplayTextColour(colour)`** method. The following code would set it to black:-
