@@ -12,8 +12,10 @@ import android.os.Bundle;
 
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -58,13 +60,23 @@ public class PickDateActivity extends Activity {
     GradientDrawable pd_selectedcellborder;
     GradientDrawable pd_normalcellborder;
     private long pd_selecteddate;
-    float largesttext_multiplier = (float) 0.65; //TODO allow percentage of largest text to be adjusted
+    float pd_displaydatetext_multiplier = 0.45f; //TODO allow percentage of largest text to be adjusted
+    float datecelltext_multiplier = 0.35f;
     int datecells_adjusted_height;
+    float datecells_textsize;
+    float displaydate_textsize;
+    int pd_adjustbuttons_height;
+    int pd_datecellheadings_height;
+    int pd_okbutton_height;
 
 
     TextView pd_displaydate;
     LinearLayout pd_outerview;
     LinearLayout pd_innerview;
+    LinearLayout pd_datedisplay;
+    LinearLayout pd_adjustbuttons;
+    LinearLayout pd_datecellheadings;
+    Button[] adjustbuttons = new Button[4];
     LinearLayout datecells_row1;
     LinearLayout datecells_row2;
     LinearLayout datecells_row3;
@@ -73,12 +85,17 @@ public class PickDateActivity extends Activity {
     LinearLayout datecells_row6;
     private TextView[][] dategrid = new TextView[6][7];
     private TextView[] dategridhdrs = new TextView[7];
+    LinearLayout pd_okbutton;
     Button okbutton;
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pickdate_layout);
         context = this;
+
+        // Get the width percentage to be applied if provided
         if (this.getIntent().getBooleanExtra(
                 PickDate.INTENTEXTRA_HEIGHTTOWIDTHRATIOSET, false)) {
             pd_widthpercentageofheight =
@@ -87,12 +104,25 @@ public class PickDateActivity extends Activity {
                             0.75f
                     );
         }
+        // Set the overall size to be used based upon the devices screen dimensions
         setOverallSize();
 
-        // Get View id's
+        // Get the various View id's
         pd_outerview = (LinearLayout) this.findViewById(R.id.pickdate_outer);
         pd_innerview = (LinearLayout) this.findViewById(R.id.pickdate_inner);
-        pd_displaydate = (TextView) this.findViewById(R.id.pickdate_datedisplay);
+        pd_datedisplay =
+                (LinearLayout) this.findViewById(
+                        R.id.pickdate_datedisplaylayout);
+        pd_displaydate =
+                (TextView) this.findViewById(
+                        R.id.pickdate_datedisplaytext);
+
+        pd_adjustbuttons = (LinearLayout)
+                this.findViewById(R.id.pickdate_adjustbuttonslayout);
+        pd_datecellheadings = (LinearLayout)
+                this.findViewById(R.id.pickdate_columnheaders);
+
+
         datecells_row1 = (LinearLayout) this.findViewById(R.id.pickdate_r1);
         okbutton = (Button) this.findViewById(R.id.pickdate_okbutton);
         pd_normalcell = ContextCompat.getDrawable(context,R.drawable.pickdatecell);
@@ -103,6 +133,12 @@ public class PickDateActivity extends Activity {
         LayerDrawable selectedcellld = (LayerDrawable) pd_selectedcell;
         pd_selectedcellhighlight = (GradientDrawable) selectedcellld.findDrawableByLayerId(R.id.cellhighlight);
         pd_selectedcellborder = (GradientDrawable) selectedcellld.findDrawableByLayerId(R.id.cellborder);
+        adjustbuttons[0] = (Button) this.findViewById(R.id.month_subtract);
+        adjustbuttons[1] = (Button) this.findViewById(R.id.month_add);
+        adjustbuttons[2] = (Button) this.findViewById(R.id.year_subtract);
+        adjustbuttons[3] = (Button) this.findViewById(R.id.year_add);
+
+        pd_okbutton = (LinearLayout) this.findViewById(R.id.pickdate_okbutton_layout);
 
         // Initialise the Dates grid and adjust the height and width
         // and also set the garvity to CENTER
@@ -110,12 +146,86 @@ public class PickDateActivity extends Activity {
         // sets the cell colours according to the theme
         initDateGrid();
 
+        // Set the outerview (LinearLayout) size according to the
         FrameLayout.LayoutParams vfl =
                 (FrameLayout.LayoutParams) pd_outerview.getLayoutParams();
         vfl.height = pd_height;
         vfl.width = pd_width;
         vfl.gravity = Gravity.CENTER;
         pd_outerview.setLayoutParams(vfl);
+
+        // Add Runnable setting the Date Display Text Size
+        // whenever the layout has completed being built
+        pd_datedisplay.post(new Runnable() {
+            @Override
+            public void run() {
+                pd_displaydate.measure(0,0);
+                displaydate_textsize =
+                        pd_displaydate.getHeight() *
+                                pd_displaydatetext_multiplier;
+                pd_displaydate.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                        displaydate_textsize);
+            }
+        });
+
+        // Add Runnnable setting the date Adjust Buttons Height and Text size
+        // whenver the layout they are in has ccompleted being built
+        pd_adjustbuttons.post(new Runnable() {
+            @Override
+            public void run() {
+                pd_adjustbuttons.measure(0,0);
+                pd_adjustbuttons_height =
+                        Math.round(pd_adjustbuttons.getHeight() * 0.75f);
+
+                for (Button adjbutton : adjustbuttons) {
+                    ViewGroup.LayoutParams adjbuttonparamas =
+                            adjbutton.getLayoutParams();
+                    adjbuttonparamas.height = pd_adjustbuttons_height;
+                    adjbutton.setLayoutParams(adjbuttonparamas);
+                    adjbutton.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                            ((float)pd_adjustbuttons_height *
+                                    datecelltext_multiplier
+                            ));
+                }
+            }
+        });
+
+        // Add Runnable setting the datecell headings Text Size
+        // whenever the layout they are in has been built
+        pd_datecellheadings.post(new Runnable() {
+            @Override
+            public void run() {
+                pd_datecellheadings.measure(0,0);
+                pd_datecellheadings_height =
+                        Math.round(pd_datecellheadings.getHeight());
+                for (TextView dghdrs : dategridhdrs) {
+                    dghdrs.setHeight(pd_datecellheadings_height);
+                    dghdrs.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                            ((float)pd_datecellheadings_height *
+                                    datecelltext_multiplier
+                            ));
+                }
+            }
+        });
+
+        // Add Runnable setting the OK button's height and Text Size
+        // whenever the layout has been built
+        pd_okbutton.post(new Runnable() {
+            @Override
+            public void run() {
+                pd_okbutton.measure(0,0);
+                pd_okbutton_height =
+                        Math.round(pd_okbutton.getHeight() * 0.75f);
+                ViewGroup.LayoutParams okbuttonparams =
+                        okbutton.getLayoutParams();
+                okbuttonparams.height = pd_okbutton_height;
+                okbutton.setLayoutParams(okbuttonparams);
+                okbutton.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                        ((float)pd_okbutton_height *
+                                datecelltext_multiplier
+                        ));
+            }
+        });
 
         setTitle();
         setOuterBackgroundColour();
@@ -147,6 +257,10 @@ public class PickDateActivity extends Activity {
         if (datecells_height > singledatecellwidth) {
             datecells_adjusted_height = datecells_height;
         }
+        datecells_textsize = ((float) datecells_adjusted_height * datecelltext_multiplier);
+
+        pd_datedisplay.measure(0,0);
+        displaydate_textsize = ((float) pd_datedisplay.getMeasuredHeight());
 
         setLinearLayoutHeight(datecells_row1,datecells_adjusted_height);
         setLinearLayoutHeight(datecells_row2,datecells_adjusted_height);
@@ -154,14 +268,6 @@ public class PickDateActivity extends Activity {
         setLinearLayoutHeight(datecells_row4,datecells_adjusted_height);
         setLinearLayoutHeight(datecells_row5,datecells_adjusted_height);
         setLinearLayoutHeight(datecells_row6,datecells_adjusted_height);
-
-        // Set the text size of the Display Date according to the size of the
-        // textview.
-        pd_displaydate.measure(0,0);
-        pd_displaydate.setTextSize(
-                (pd_displaydate.getMeasuredHeight() *
-                largesttext_multiplier)
-        );
 
         populateDateGrid(calendar);
     }
@@ -190,10 +296,8 @@ public class PickDateActivity extends Activity {
         datecells_row1 = (LinearLayout) this.findViewById(R.id.pickdate_r1);
         dategrid[0][0] = (TextView) this.findViewById(R.id.pickdate_r1c1);
         pd_basecellcolour = dategrid[0][0].getCurrentTextColor();
-        pd_dimmedcellcolour = pd_basecellcolour & 0x55ffffff;
-        pd_highlightedcellcolour = pd_basecellcolour;
-        pd_highlightedcellhighlightcolour =
-                pd_highlightedcellcolour & 0x55ffffff;
+        pd_dimmedcellcolour = pd_basecellcolour & 0x99ffffff;
+        pd_highlightedcellcolour = pd_basecellcolour & 0x99ffffff;
         dategrid[0][1] = (TextView) this.findViewById(R.id.pickdate_r1c2);
         dategrid[0][2] = (TextView) this.findViewById(R.id.pickdate_r1c3);
         dategrid[0][3] = (TextView) this.findViewById(R.id.pickdate_r1c4);
@@ -264,13 +368,6 @@ public class PickDateActivity extends Activity {
         dategridhdrs[5] = (TextView) this.findViewById(R.id.pickdate_c6hdr);
         dategridhdrs[6] = (TextView) this.findViewById(R.id.pickdate_c7hdr);
 
-        // Set the  Dategrid Heading TextSize according to the height of the
-        // TextView
-        for (TextView dghdrtv : dategridhdrs) {
-            dghdrtv.measure(0,0);
-            dghdrtv.setTextSize(dghdrtv.getMeasuredHeight() * 0.85f);
-        }
-
     }
 
     /*************************************************************************
@@ -295,6 +392,7 @@ public class PickDateActivity extends Activity {
      */
     private void populateDateGrid(Calendar cal) {
         pd_displaydate.setText(PDSDF.format(cal.getTimeInMillis()));
+        pd_displaydate.setTextSize(displaydate_textsize);
         int selected_dayinmonth = cal.get(Calendar.DAY_OF_MONTH);
         int selected_month = cal.get(Calendar.MONTH);
         // Create working copy of the calendar passed
@@ -326,6 +424,7 @@ public class PickDateActivity extends Activity {
         // selected date.
         for (TextView[] aDategrid : dategrid) {
             for (TextView anADategrid : aDategrid) {
+                anADategrid.setTextSize(datecells_textsize);
                 boolean selectedcell = false;
                 anADategrid.setTextColor(pd_basecellcolour);
                 // Not in this month so not in month text colour
@@ -368,8 +467,8 @@ public class PickDateActivity extends Activity {
                 tempcal.setTimeInMillis(nextday);
             }
         }
-    }
 
+    }
 
     /**************************************************************************
      * Set the Overall Size of the Dialog
@@ -472,7 +571,7 @@ public class PickDateActivity extends Activity {
         }
     }
 
-    /**
+    /**************************************************************************
      * Set the Text Colour of the date grid headings (mon, tue etc)
      */
     private void setDateGridHeadingsTextColour() {
@@ -573,41 +672,73 @@ public class PickDateActivity extends Activity {
         populateDateGrid(calendar);
     }
 
+    /**************************************************************************
+     * Handle the -Month button being clicked
+     * @param v the view that was clicked
+     */
     public void subtractMonth(View v) {
         calendar.setTimeInMillis(pd_selecteddate);
         calendar.add(Calendar.MONTH,-1);
         applyChangedDate();
     }
 
+    /**************************************************************************
+     * Handle the Month+ button being clicked
+     * @param v the view that was clicked
+     */
     public void addMonth(View v) {
         calendar.setTimeInMillis(pd_selecteddate);
         calendar.add(Calendar.MONTH,1);
         applyChangedDate();
     }
 
+    /**************************************************************************
+     * Handle the -Year button being clicked
+     * @param v the view that was clicked
+     */
     public void subtractYear(View v) {
         calendar.setTimeInMillis(pd_selecteddate);
         calendar.add(Calendar.YEAR,-1);
         applyChangedDate();
     }
 
+    /**************************************************************************
+     * Handle the Year+ button being clicked
+     * @param v the view that was clicked
+     */
     public void addYear(View v) {
         calendar.setTimeInMillis(pd_selecteddate);
         calendar.add(Calendar.YEAR,1);
         applyChangedDate();
     }
 
+    /**************************************************************************
+     * Apply a Changed Date
+     */
     private void applyChangedDate() {
         pd_selecteddate = calendar.getTimeInMillis();
         PickDate.setSelectedDate(pd_selecteddate);
         populateDateGrid(calendar);
     }
 
+    /**************************************************************************
+     * Convert an argb integer into a ColorDrawable i.e.
+     * exract the 4 componants Alpha, Red, Green and Blue and use them to
+     * build the ColorDrawable
+     * i.e.
+     * @param argb  The colour to ve converted
+     * @return      The resultant ColorDrawable
+     */
     private ColorDrawable argbToColor(int argb) {
         int alphapart = (argb >> 24) & 0xff;
         int redpart = (argb >> 16) & 0xff;
         int greenpart = (argb >> 8) & 0xff;
         int bluepart = argb & 0xff;
-        return  new ColorDrawable(Color.argb(alphapart,redpart,greenpart,bluepart));
+        return  new ColorDrawable(Color.argb(
+                alphapart,
+                redpart,
+                greenpart,
+                bluepart
+        ));
     }
 }

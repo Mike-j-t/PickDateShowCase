@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -33,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     PickDate mypickdate;
     TextView showdate;
+    TextView screenpercentage;
     Date testdate;
 
     @Override
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         resumestate = RESUMESTATE_NORMAL;
+        screenpercentage = (TextView) this.findViewById(R.id.screenpercentage);
     }
 
     @Override
@@ -60,10 +61,6 @@ public class MainActivity extends AppCompatActivity {
         resumestate = RESUMESTATE_NORMAL;
     }
 
-    protected void onActivityresult() {
-        Toast.makeText(this,"onActivityresult invoked",Toast.LENGTH_SHORT).show();
-    }
-
     /**************************************************************************
      * OK button clicked
      * @param v     The View that was clicked
@@ -80,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialise/Contruct a Date Picker Object
         mypickdate = new PickDate(this,
-                System.currentTimeMillis()
+                System.currentTimeMillis(),
+                55
         );
         //mypickdate = new PickDate(this);
 
@@ -91,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
         //      (2) Empty, or null (eg not calling this) will result in the
         //          title defulting to Pick a Date.
         //mypickdate.setTitle("My Custom Title");     // Set the Date Picker's Title
-        //mypickdate.setTitleBackgroundColour(0xff0000aa); // Note sets entire background
+        mypickdate.setTitleBackgroundColour(0xff0000aa); // Note sets entire background
         //mypickdate.setTitletextColour(0xffff0000); // Doesn't work
-        //mypickdate.setOuterBackgroundColour(0xff7777ff);
-        //mypickdate.setInnerBackGroundColour(0xff3333ff);
+        mypickdate.setOuterBackgroundColour(0xff7777ff);
+        mypickdate.setInnerBackGroundColour(0xff3333ff);
         //mypickdate.setDateGridHeadingsTextColour(0xffff0000);
         //mypickdate.setNotInMonthCellTextColour(0xffaaaaaa);
         //mypickdate.setInMonthCellTextColour(0xff0000ff);
@@ -108,8 +106,16 @@ public class MainActivity extends AppCompatActivity {
         //mypickdate.setSelectedCellBackgroundColour(0xffff0000);
         mypickdate.show(this);              // Invoke the Date Picker
         resumestate = RESUMESTATE_DATEPICKED;
+    }
+    public void pickDateForScreenPercentage(View v) {
+        mypickdate = new PickDate(this,
+                System.currentTimeMillis(),
+                Integer.parseInt(screenpercentage.getText().toString()));
+        mypickdate.setTitle("Pick Date SP");
+        mypickdate.show(this);
+        resumestate = RESUMESTATE_DATEPICKED;
 
-}
+    }
     public void done(View v) {
         this.finish();
     }

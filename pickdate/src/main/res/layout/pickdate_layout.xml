@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pickdate_outer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,86 +12,91 @@
         android:id="@+id/pickdate_inner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_margin="0dp"
         android:orientation="vertical"
-        android:padding="0dp">
-
-        <TextView
-            android:id="@+id/pickdate_datedisplay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="20pt" />
-
+        android:padding="0dp"
+        tools:ignore="UselessParent">
         <LinearLayout
+            android:id="@+id/pickdate_datedisplaylayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1.5">
+            <TextView
+                android:id="@+id/pickdate_datedisplaytext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/pickdate_adjustbuttonslayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
             <Button
                 android:id="@+id/month_subtract"
                 style="@style/pickdate_adjustbutton"
                 android:onClick="subtractMonth"
-                android:text="-Month" />
+                android:text="@string/pickdate_subtractmonthbuttontext" />
 
             <Button
                 android:id="@+id/month_add"
                 style="@style/pickdate_adjustbutton"
                 android:onClick="addMonth"
-                android:text="Month+" />
+                android:text="@string/pickdate_addmonthbuttontext" />
 
             <Button
                 android:id="@+id/year_subtract"
                 style="@style/pickdate_adjustbutton"
                 android:onClick="subtractYear"
-                android:text="-Year" />
+                android:text="@string/pickdate_substractyearbuttontext" />
 
             <Button
                 android:id="@+id/year_add"
                 style="@style/pickdate_adjustbutton"
                 android:onClick="addYear"
-                android:text="Year+" />
+                android:text="@string/pickdate_addyearbuttontext" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/pickdate_columnheaders"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp">
-
+            android:layout_height="0dp"
+            android:layout_weight="0.5">
             <TextView
                 android:id="@+id/pickdate_c1hdr"
                 style="@style/pickdate_dategridcolumnheader"
-                android:text="Mon" />
+                android:text="@string/pickdate_monday" />
 
             <TextView
                 android:id="@+id/pickdate_c2hdr"
                 style="@style/pickdate_dategridcolumnheader"
-                android:text="Tue" />
+                android:text="@string/pickdate_tuesday" />
 
             <TextView
                 android:id="@+id/pickdate_c3hdr"
                 style="@style/pickdate_dategridcolumnheader"
-                android:text="Wed" />
+                android:text="@string/pickdate_wednesday" />
 
             <TextView
                 android:id="@+id/pickdate_c4hdr"
                 style="@style/pickdate_dategridcolumnheader"
-                android:text="Thu" />
+                android:text="@string/pickdate_thursday" />
 
             <TextView
                 android:id="@+id/pickdate_c5hdr"
                 style="@style/pickdate_dategridcolumnheader"
-                android:text="Fri" />
+                android:text="@string/pickdate_friday" />
 
             <TextView
                 android:id="@+id/pickdate_c6hdr"
                 style="@style/pickdate_dategridcolumnheader"
-                android:text="Sat" />
+                android:text="@string/pickdate_saturday" />
 
             <TextView
                 android:id="@+id/pickdate_c7hdr"
                 style="@style/pickdate_dategridcolumnheader"
-                android:text="Sun" />
+                android:text="@string/pickdate_sunday" />
         </LinearLayout>
 
         <LinearLayout
@@ -292,17 +298,19 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/pickdate_okbutton_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom">
-
+            android:layout_height="0dp"
+            android:layout_weight="1">
             <Button
                 android:id="@+id/pickdate_okbutton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="bottom"
                 android:onClick="okbuttonclick"
-                android:text="OK" />
+                android:padding="0dp"
+                android:text="@string/pickdate_okbuttontext"
+                android:textColor="@color/black" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

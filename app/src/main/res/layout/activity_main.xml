@@ -26,12 +26,35 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pick Date"
+            android:text="@string/pickdatebuttontext"
             android:onClick="pickDate"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/screenpercentagebutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pickdatebuttontext"
+                android:onClick="pickDateForScreenPercentage"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/screenpercentagelabeltext"/>
+            <EditText
+                android:id="@+id/screenpercentage"
+                android:labelFor="@id/screenpercentagebutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="@string/defaultscreenpercentage"
+                android:maxLength="2"/>
+        </LinearLayout>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DONE"
+            android:text="@string/donebuttontext"
             android:onClick="done"/>
     </LinearLayout>
 

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PickDateShowCase</string>
+    <string name="donebuttontext">Done</string>
+    <string name="pickdatebuttontext">Pick Date</string>
+    <string name="defaultscreenpercentage">75</string>
+    <string name="screenpercentagelabeltext">Screen Percentage value ===></string>
 </resources>

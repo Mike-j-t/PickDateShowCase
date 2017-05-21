@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">PickDate</string>
     <string name="default_title">Pick the Date</string>
+    <string name="pickdate_monday">Mon</string>
+    <string name="pickdate_tuesday">Tue</string>
+    <string name="pickdate_wednesday">Wed</string>
+    <string name="pickdate_thursday">Thu</string>
+    <string name="pickdate_friday">Fri</string>
+    <string name="pickdate_saturday">Sat</string>
+    <string name="pickdate_sunday">Sun</string>
+    <string name="pickdate_okbuttontext">OK</string>
+    <string name="pickdate_subtractmonthbuttontext">-Month</string>
+    <string name="pickdate_addmonthbuttontext">Month+</string>
+    <string name="pickdate_substractyearbuttontext">-Year</string>
+    <string name="pickdate_addyearbuttontext">Year+</string>
 </resources>
