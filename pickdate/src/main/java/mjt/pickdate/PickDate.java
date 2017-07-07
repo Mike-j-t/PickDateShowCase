@@ -10,6 +10,7 @@ import android.content.Intent;
  *                  a date picker.
  */
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class PickDate {
 
     // Define INTENT EXTRA keys
@@ -65,7 +66,6 @@ public class PickDate {
                     x = ""
                     ;
     public static final int PICKDATE_RESULTCODE = 111;
-                    ;
 
     private static long mSelectedDate = -1;
     private transient Context mContext;
@@ -382,7 +382,8 @@ public class PickDate {
 
     /**************************************************************************
      *
-     * @param selectedcellhightlightcolour
+     * @param selectedcellhightlightcolour The colour with which to highlight
+     *                                     the selected cell integer as argb
      */
     public void setSelectedcellHightColour(int selectedcellhightlightcolour) {
         mSelectedCellHightLightColour = selectedcellhightlightcolour;
@@ -414,9 +415,10 @@ public class PickDate {
         mSelectedCellHighlight = selectedcellhighlight;
     }
 
-    /**
+    /**************************************************************************
      * Set the text colour of the DisplayDate
-     * @param datedisplaytextcolour
+     * @param datedisplaytextcolour The colour with which to set the display
+     *                              date text, integer as argb.
      */
     public void setDateDisplayTextColour(int datedisplaytextcolour) {
         mDateDisplayColour = datedisplaytextcolour;
@@ -438,7 +440,8 @@ public class PickDate {
 
     /**************************************************************************
      * Set the selected date, for external use by PickDateActivity
-     * @param newdate
+     * @param newdate The date, as a long timestamp, with which to set the
+     *                date before showing the Date Pikcer.
      */
     static void setSelectedDate(long newdate) {
         mSelectedDate = newdate;

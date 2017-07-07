@@ -1,5 +1,6 @@
 package mjt.pickdate;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 
 import android.content.Context;
@@ -29,6 +30,7 @@ import java.util.Locale;
 /**
  * Pickdate Activity - Display a Dialog for selecting a Date
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class PickDateActivity extends Activity {
 
     public static final SimpleDateFormat PDSDF =
@@ -38,7 +40,7 @@ public class PickDateActivity extends Activity {
     Context context;
 
     String pd_title = "";
-    private Calendar calendar = Calendar.getInstance();
+    private final Calendar calendar = Calendar.getInstance();
 
     int pd_width;
     float pd_widthpercentageofheight = 0.75f;
@@ -60,8 +62,8 @@ public class PickDateActivity extends Activity {
     GradientDrawable pd_selectedcellborder;
     GradientDrawable pd_normalcellborder;
     private long pd_selecteddate;
-    float pd_displaydatetext_multiplier = 0.45f; //TODO allow percentage of largest text to be adjusted
-    float datecelltext_multiplier = 0.35f;
+    final float pd_displaydatetext_multiplier = 0.45f; //TODO allow percentage of largest text to be adjusted
+    final float datecelltext_multiplier = 0.35f;
     int datecells_adjusted_height;
     float datecells_textsize;
     float displaydate_textsize;
@@ -76,15 +78,15 @@ public class PickDateActivity extends Activity {
     LinearLayout pd_datedisplay;
     LinearLayout pd_adjustbuttons;
     LinearLayout pd_datecellheadings;
-    Button[] adjustbuttons = new Button[4];
+    final Button[] adjustbuttons = new Button[4];
     LinearLayout datecells_row1;
     LinearLayout datecells_row2;
     LinearLayout datecells_row3;
     LinearLayout datecells_row4;
     LinearLayout datecells_row5;
     LinearLayout datecells_row6;
-    private TextView[][] dategrid = new TextView[6][7];
-    private TextView[] dategridhdrs = new TextView[7];
+    private final TextView[][] dategrid = new TextView[6][7];
+    private final TextView[] dategridhdrs = new TextView[7];
     LinearLayout pd_okbutton;
     Button okbutton;
 
@@ -273,6 +275,7 @@ public class PickDateActivity extends Activity {
     }
 
 
+    @SuppressWarnings("EmptyMethod")
     @Override
     protected void onResume() {
         super.onResume();
@@ -390,6 +393,7 @@ public class PickDateActivity extends Activity {
      * previous month and some for the following month.
      * @param cal   The Calendar set to the currently selected date
      */
+    @SuppressLint("SetTextI18n")
     private void populateDateGrid(Calendar cal) {
         pd_displaydate.setText(PDSDF.format(cal.getTimeInMillis()));
         pd_displaydate.setTextSize(displaydate_textsize);
