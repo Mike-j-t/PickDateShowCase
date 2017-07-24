@@ -12,6 +12,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -171,7 +172,7 @@ public class PickDateActivity extends Activity {
         });
 
         // Add Runnnable setting the date Adjust Buttons Height and Text size
-        // whenver the layout they are in has ccompleted being built
+        // whenever the layout they are in has completed being built
         pd_adjustbuttons.post(new Runnable() {
             @Override
             public void run() {
@@ -245,8 +246,7 @@ public class PickDateActivity extends Activity {
 
         // Uses the screen size to set textsizes
         final float displaydate_text_size = (float) pd_height / 20;
-        //pd_displaydate.setTextSize(displaydate_text_size);
-        okbutton.setTextSize((displaydate_text_size * (float) 0.55));
+        okbutton.setTextSize(TypedValue.COMPLEX_UNIT_PX,(displaydate_text_size * (float) 0.55));
 
         // Determine the height to be used to make date cells square
         // Note only if width of cell is smaller than height
@@ -262,7 +262,7 @@ public class PickDateActivity extends Activity {
         datecells_textsize = ((float) datecells_adjusted_height * datecelltext_multiplier);
 
         pd_datedisplay.measure(0,0);
-        displaydate_textsize = ((float) pd_datedisplay.getMeasuredHeight());
+        displaydate_textsize = ((float) pd_datedisplay.getMeasuredHeight() * pd_displaydatetext_multiplier);
 
         setLinearLayoutHeight(datecells_row1,datecells_adjusted_height);
         setLinearLayoutHeight(datecells_row2,datecells_adjusted_height);
@@ -357,7 +357,6 @@ public class PickDateActivity extends Activity {
             for (int ii=0; ii < dategrid[i].length; ii++) {
                 dategrid[i][ii].setTag(Integer.toString(ii + (i * dategrid[i].length)));
                 dategrid[i][ii].measure(0,0);
-                dategrid[i][ii].setTextSize(dategrid[i][ii].getMeasuredHeight());
                 dategrid[i][ii].setHeight(datecells_adjusted_height);
             }
         }
@@ -396,7 +395,7 @@ public class PickDateActivity extends Activity {
     @SuppressLint("SetTextI18n")
     private void populateDateGrid(Calendar cal) {
         pd_displaydate.setText(PDSDF.format(cal.getTimeInMillis()));
-        pd_displaydate.setTextSize(displaydate_textsize);
+        pd_displaydate.setTextSize(TypedValue.COMPLEX_UNIT_PX,displaydate_textsize);
         int selected_dayinmonth = cal.get(Calendar.DAY_OF_MONTH);
         int selected_month = cal.get(Calendar.MONTH);
         // Create working copy of the calendar passed
@@ -438,12 +437,9 @@ public class PickDateActivity extends Activity {
                     // If the selected date then use text colour and background
                     if (tempcal.get(Calendar.DAY_OF_MONTH) == selected_dayinmonth) {
                         anADategrid.setTextColor(pd_highlightedcellcolour);
-                        anADategrid.setBackground(pd_selectedcell);
+                        ViewCompat.setBackground(anADategrid,pd_selectedcell);
                         // If we want to use an alternative background colour
                         if (pd_selectedcellbackgrndcolourflag) {
-                            //anADategrid.setBackgroundColor(pd_selectedcellbackgrndcolour);
-                            //Drawable d = DrawableCompat.wrap(anADategrid.getBackground());
-                            //DrawableCompat.setTint(d,pd_selectedcellbackgrndcolour);
                             GradientDrawable gdhighlight = pd_selectedcellhighlight;
                             GradientDrawable gdborder = pd_selectedcellborder;
                             pd_selectedcellborder.setColor(pd_selectedcellbackgrndcolour);
@@ -452,10 +448,11 @@ public class PickDateActivity extends Activity {
                     }
                 }
                 if (!selectedcell) {
-                    anADategrid.setBackground(pd_normalcell);
+                    ViewCompat.setBackground(anADategrid,pd_normalcell);
                 }
                 // Always set the text to the day of the month
                 anADategrid.setHeight(datecells_adjusted_height);
+                anADategrid.setTextSize(TypedValue.COMPLEX_UNIT_PX,datecells_textsize);
                 anADategrid.setText(
                         Integer.toString(
                                 tempcal.get(
