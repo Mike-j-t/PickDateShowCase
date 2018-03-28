@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">PickDate</string>
-    <string name="default_title">Pick the Date</string>
     <string name="pickdate_monday">Mon</string>
     <string name="pickdate_tuesday">Tue</string>
     <string name="pickdate_wednesday">Wed</string>

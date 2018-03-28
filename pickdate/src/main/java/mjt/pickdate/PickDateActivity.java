@@ -111,23 +111,21 @@ public class PickDateActivity extends Activity {
         setOverallSize();
 
         // Get the various View id's
-        pd_outerview = (LinearLayout) this.findViewById(R.id.pickdate_outer);
-        pd_innerview = (LinearLayout) this.findViewById(R.id.pickdate_inner);
+        pd_outerview = this.findViewById(R.id.pickdate_outer);
+        pd_innerview = this.findViewById(R.id.pickdate_inner);
         pd_datedisplay =
-                (LinearLayout) this.findViewById(
+                this.findViewById(
                         R.id.pickdate_datedisplaylayout);
         pd_displaydate =
-                (TextView) this.findViewById(
+                this.findViewById(
                         R.id.pickdate_datedisplaytext);
 
-        pd_adjustbuttons = (LinearLayout)
-                this.findViewById(R.id.pickdate_adjustbuttonslayout);
-        pd_datecellheadings = (LinearLayout)
-                this.findViewById(R.id.pickdate_columnheaders);
+        pd_adjustbuttons = this.findViewById(R.id.pickdate_adjustbuttonslayout);
+        pd_datecellheadings = this.findViewById(R.id.pickdate_columnheaders);
 
 
-        datecells_row1 = (LinearLayout) this.findViewById(R.id.pickdate_r1);
-        okbutton = (Button) this.findViewById(R.id.pickdate_okbutton);
+        datecells_row1 = this.findViewById(R.id.pickdate_r1);
+        okbutton = this.findViewById(R.id.pickdate_okbutton);
         pd_normalcell = ContextCompat.getDrawable(context,R.drawable.pickdatecell);
         LayerDrawable normalcellld = (LayerDrawable) pd_normalcell;
         pd_normalcellborder = (GradientDrawable) normalcellld.findDrawableByLayerId(R.id.normalcellborder);
@@ -136,12 +134,12 @@ public class PickDateActivity extends Activity {
         LayerDrawable selectedcellld = (LayerDrawable) pd_selectedcell;
         pd_selectedcellhighlight = (GradientDrawable) selectedcellld.findDrawableByLayerId(R.id.cellhighlight);
         pd_selectedcellborder = (GradientDrawable) selectedcellld.findDrawableByLayerId(R.id.cellborder);
-        adjustbuttons[0] = (Button) this.findViewById(R.id.month_subtract);
-        adjustbuttons[1] = (Button) this.findViewById(R.id.month_add);
-        adjustbuttons[2] = (Button) this.findViewById(R.id.year_subtract);
-        adjustbuttons[3] = (Button) this.findViewById(R.id.year_add);
+        adjustbuttons[0] = this.findViewById(R.id.month_subtract);
+        adjustbuttons[1] = this.findViewById(R.id.month_add);
+        adjustbuttons[2] = this.findViewById(R.id.year_subtract);
+        adjustbuttons[3] = this.findViewById(R.id.year_add);
 
-        pd_okbutton = (LinearLayout) this.findViewById(R.id.pickdate_okbutton_layout);
+        pd_okbutton = this.findViewById(R.id.pickdate_okbutton_layout);
 
         // Initialise the Dates grid and adjust the height and width
         // and also set the garvity to CENTER
@@ -296,79 +294,85 @@ public class PickDateActivity extends Activity {
     // Initialise the dategrid with the respective textView id's
     private void initDateGrid() {
         // Top Row
-        datecells_row1 = (LinearLayout) this.findViewById(R.id.pickdate_r1);
-        dategrid[0][0] = (TextView) this.findViewById(R.id.pickdate_r1c1);
+        datecells_row1 = this.findViewById(R.id.pickdate_r1);
+        dategrid[0][0] = this.findViewById(R.id.pickdate_r1c1);
         pd_basecellcolour = dategrid[0][0].getCurrentTextColor();
         pd_dimmedcellcolour = pd_basecellcolour & 0x99ffffff;
         pd_highlightedcellcolour = pd_basecellcolour & 0x99ffffff;
-        dategrid[0][1] = (TextView) this.findViewById(R.id.pickdate_r1c2);
-        dategrid[0][2] = (TextView) this.findViewById(R.id.pickdate_r1c3);
-        dategrid[0][3] = (TextView) this.findViewById(R.id.pickdate_r1c4);
-        dategrid[0][4] = (TextView) this.findViewById(R.id.pickdate_r1c5);
-        dategrid[0][5] = (TextView) this.findViewById(R.id.pickdate_r1c6);
-        dategrid[0][6] = (TextView) this.findViewById(R.id.pickdate_r1c7);
+        dategrid[0][1] = this.findViewById(R.id.pickdate_r1c2);
+        dategrid[0][2] = this.findViewById(R.id.pickdate_r1c3);
+        dategrid[0][3] = this.findViewById(R.id.pickdate_r1c4);
+        dategrid[0][4] = this.findViewById(R.id.pickdate_r1c5);
+        dategrid[0][5] = this.findViewById(R.id.pickdate_r1c6);
+        dategrid[0][6] = this.findViewById(R.id.pickdate_r1c7);
         // 2nd Row
-        datecells_row2 = (LinearLayout) this.findViewById(R.id.pickdate_r2);
-        dategrid[1][0] = (TextView) this.findViewById(R.id.pickdate_r2c1);
-        dategrid[1][1] = (TextView) this.findViewById(R.id.pickdate_r2c2);
-        dategrid[1][2] = (TextView) this.findViewById(R.id.pickdate_r2c3);
-        dategrid[1][3] = (TextView) this.findViewById(R.id.pickdate_r2c4);
-        dategrid[1][4] = (TextView) this.findViewById(R.id.pickdate_r2c5);
-        dategrid[1][5] = (TextView) this.findViewById(R.id.pickdate_r2c6);
-        dategrid[1][6] = (TextView) this.findViewById(R.id.pickdate_r2c7);
+        datecells_row2 = this.findViewById(R.id.pickdate_r2);
+        dategrid[1][0] = this.findViewById(R.id.pickdate_r2c1);
+        dategrid[1][1] = this.findViewById(R.id.pickdate_r2c2);
+        dategrid[1][2] = this.findViewById(R.id.pickdate_r2c3);
+        dategrid[1][3] = this.findViewById(R.id.pickdate_r2c4);
+        dategrid[1][4] = this.findViewById(R.id.pickdate_r2c5);
+        dategrid[1][5] = this.findViewById(R.id.pickdate_r2c6);
+        dategrid[1][6] = this.findViewById(R.id.pickdate_r2c7);
         // 3rd Row
-        datecells_row3 = (LinearLayout) this.findViewById(R.id.pickdate_r3);
-        dategrid[2][0] = (TextView) this.findViewById(R.id.pickdate_r3c1);
-        dategrid[2][1] = (TextView) this.findViewById(R.id.pickdate_r3c2);
-        dategrid[2][2] = (TextView) this.findViewById(R.id.pickdate_r3c3);
-        dategrid[2][3] = (TextView) this.findViewById(R.id.pickdate_r3c4);
-        dategrid[2][4] = (TextView) this.findViewById(R.id.pickdate_r3c5);
-        dategrid[2][5] = (TextView) this.findViewById(R.id.pickdate_r3c6);
-        dategrid[2][6] = (TextView) this.findViewById(R.id.pickdate_r3c7);
+        datecells_row3 = this.findViewById(R.id.pickdate_r3);
+        dategrid[2][0] = this.findViewById(R.id.pickdate_r3c1);
+        dategrid[2][1] = this.findViewById(R.id.pickdate_r3c2);
+        dategrid[2][2] = this.findViewById(R.id.pickdate_r3c3);
+        dategrid[2][3] = this.findViewById(R.id.pickdate_r3c4);
+        dategrid[2][4] = this.findViewById(R.id.pickdate_r3c5);
+        dategrid[2][5] = this.findViewById(R.id.pickdate_r3c6);
+        dategrid[2][6] = this.findViewById(R.id.pickdate_r3c7);
         // 4th Row
-        datecells_row4 = (LinearLayout) this.findViewById(R.id.pickdate_r4);
-        dategrid[3][0] = (TextView) this.findViewById(R.id.pickdate_r4c1);
-        dategrid[3][1] = (TextView) this.findViewById(R.id.pickdate_r4c2);
-        dategrid[3][2] = (TextView) this.findViewById(R.id.pickdate_r4c3);
-        dategrid[3][3] = (TextView) this.findViewById(R.id.pickdate_r4c4);
-        dategrid[3][4] = (TextView) this.findViewById(R.id.pickdate_r4c5);
-        dategrid[3][5] = (TextView) this.findViewById(R.id.pickdate_r4c6);
-        dategrid[3][6] = (TextView) this.findViewById(R.id.pickdate_r4c7);
+        datecells_row4 = this.findViewById(R.id.pickdate_r4);
+        dategrid[3][0] = this.findViewById(R.id.pickdate_r4c1);
+        dategrid[3][1] = this.findViewById(R.id.pickdate_r4c2);
+        dategrid[3][2] = this.findViewById(R.id.pickdate_r4c3);
+        dategrid[3][3] = this.findViewById(R.id.pickdate_r4c4);
+        dategrid[3][4] = this.findViewById(R.id.pickdate_r4c5);
+        dategrid[3][5] = this.findViewById(R.id.pickdate_r4c6);
+        dategrid[3][6] = this.findViewById(R.id.pickdate_r4c7);
         // 5th Row
-        datecells_row5 = (LinearLayout) this.findViewById(R.id.pickdate_r5);
-        dategrid[4][0] = (TextView) this.findViewById(R.id.pickdate_r5c1);
-        dategrid[4][1] = (TextView) this.findViewById(R.id.pickdate_r5c2);
-        dategrid[4][2] = (TextView) this.findViewById(R.id.pickdate_r5c3);
-        dategrid[4][3] = (TextView) this.findViewById(R.id.pickdate_r5c4);
-        dategrid[4][4] = (TextView) this.findViewById(R.id.pickdate_r5c5);
-        dategrid[4][5] = (TextView) this.findViewById(R.id.pickdate_r5c6);
-        dategrid[4][6] = (TextView) this.findViewById(R.id.pickdate_r5c7);
+        datecells_row5 = this.findViewById(R.id.pickdate_r5);
+        dategrid[4][0] = this.findViewById(R.id.pickdate_r5c1);
+        dategrid[4][1] = this.findViewById(R.id.pickdate_r5c2);
+        dategrid[4][2] = this.findViewById(R.id.pickdate_r5c3);
+        dategrid[4][3] = this.findViewById(R.id.pickdate_r5c4);
+        dategrid[4][4] = this.findViewById(R.id.pickdate_r5c5);
+        dategrid[4][5] = this.findViewById(R.id.pickdate_r5c6);
+        dategrid[4][6] = this.findViewById(R.id.pickdate_r5c7);
         // Last (6th) row
-        datecells_row6 = (LinearLayout) this.findViewById(R.id.pickdate_r6);
-        dategrid[5][0] = (TextView) this.findViewById(R.id.pickdate_r6c1);
-        dategrid[5][1] = (TextView) this.findViewById(R.id.pickdate_r6c2);
-        dategrid[5][2] = (TextView) this.findViewById(R.id.pickdate_r6c3);
-        dategrid[5][3] = (TextView) this.findViewById(R.id.pickdate_r6c4);
-        dategrid[5][4] = (TextView) this.findViewById(R.id.pickdate_r6c5);
-        dategrid[5][5] = (TextView) this.findViewById(R.id.pickdate_r6c6);
-        dategrid[5][6] = (TextView) this.findViewById(R.id.pickdate_r6c7);
+        datecells_row6 = this.findViewById(R.id.pickdate_r6);
+        dategrid[5][0] = this.findViewById(R.id.pickdate_r6c1);
+        dategrid[5][1] = this.findViewById(R.id.pickdate_r6c2);
+        dategrid[5][2] = this.findViewById(R.id.pickdate_r6c3);
+        dategrid[5][3] = this.findViewById(R.id.pickdate_r6c4);
+        dategrid[5][4] = this.findViewById(R.id.pickdate_r6c5);
+        dategrid[5][5] = this.findViewById(R.id.pickdate_r6c6);
+        dategrid[5][6] = this.findViewById(R.id.pickdate_r6c7);
 
         for (int i=0;i < dategrid.length; i++) {
             for (int ii=0; ii < dategrid[i].length; ii++) {
                 dategrid[i][ii].setTag(Integer.toString(ii + (i * dategrid[i].length)));
                 dategrid[i][ii].measure(0,0);
                 dategrid[i][ii].setHeight(datecells_adjusted_height);
+                dategrid[i][ii].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        clickDateCell(v);
+                    }
+                });
             }
         }
 
         // get the TextView id's for the dateGrid Column Headings
-        dategridhdrs[0] = (TextView) this.findViewById(R.id.pickdate_c1hdr);
-        dategridhdrs[1] = (TextView) this.findViewById(R.id.pickdate_c2hdr);
-        dategridhdrs[2] = (TextView) this.findViewById(R.id.pickdate_c3hdr);
-        dategridhdrs[3] = (TextView) this.findViewById(R.id.pickdate_c4hdr);
-        dategridhdrs[4] = (TextView) this.findViewById(R.id.pickdate_c5hdr);
-        dategridhdrs[5] = (TextView) this.findViewById(R.id.pickdate_c6hdr);
-        dategridhdrs[6] = (TextView) this.findViewById(R.id.pickdate_c7hdr);
+        dategridhdrs[0] = this.findViewById(R.id.pickdate_c1hdr);
+        dategridhdrs[1] = this.findViewById(R.id.pickdate_c2hdr);
+        dategridhdrs[2] = this.findViewById(R.id.pickdate_c3hdr);
+        dategridhdrs[3] = this.findViewById(R.id.pickdate_c4hdr);
+        dategridhdrs[4] = this.findViewById(R.id.pickdate_c5hdr);
+        dategridhdrs[5] = this.findViewById(R.id.pickdate_c6hdr);
+        dategridhdrs[6] = this.findViewById(R.id.pickdate_c7hdr);
 
     }
 
@@ -559,7 +563,7 @@ public class PickDateActivity extends Activity {
     }
 
     /**************************************************************************
-     * Set the InnerBackground attricutes if customised
+     * Set the InnerBackground attributes if customised
      */
     private void setInnerBackgroundColour() {
         if (this.getIntent().getBooleanExtra(

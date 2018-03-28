@@ -446,5 +446,4 @@ public class PickDate {
     static void setSelectedDate(long newdate) {
         mSelectedDate = newdate;
     }
-
 }
